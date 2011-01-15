@@ -1,0 +1,8 @@
+{
+    "name" : "Numbers::Ordinal",
+    "version" : "*",
+    "description" : "A module that generates ordinal numbers from cardinal numbers",
+    "depends" : [],
+    "repo-type" : "git",
+    "repo-url" : "git://github.com/lue/Numbers--Ordinal.git"
+}
