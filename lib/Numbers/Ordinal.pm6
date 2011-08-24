@@ -36,7 +36,7 @@ sub ordinal(Int $input) is export {
             ##STEP 1: Hundreds digit
             if $hundred.comb[0] !~~ 0 {
                 $outtmp ~= @single[$hundred.comb[0]][0] ~ @single[$hundred.comb[0]][1] ~ " hundred";
-                $outtmp ~= ($hundred.substr(1,2) ~~ 0 && $last ?? "th " !! " ");
+                $outtmp ~= ($hundred.substr(1,2) ~~ 0 && $last ?? "th" !! " ");
             }
 
             ##STEP 2: Tens digit
@@ -62,6 +62,7 @@ sub ordinal(Int $input) is export {
 
         ##STEP 5: Add groups of three delimiters
         for 1..^@outnum.elems { # because working on the last element of @outnum is redundant
+            @outnum[*-($_+1)] .= trim; # perhaps in the future a *real* fix for trailing spaces can be made
             @outnum[*-($_+1)] ~= " " ~ @highdenoms[$_][0];
             @outnum[*-($_+1)] ~= (@outnum[*-$_..*-1].join("") == "" ?? @highdenoms[$_][2] !! @highdenoms[$_][1]);
         }
