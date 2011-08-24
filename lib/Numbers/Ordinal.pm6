@@ -23,49 +23,55 @@ sub ordinal(Int $input) is export {
 
     # setting up for the main operation
     $n = '0' ~ $n until $n.chars %% 3;
-    my @number = $n.comb(/\d**3/);
+    my @number = $n.comb(/<digit>**3/);
     my @outnum;
     my $output;
 
-    # this for loop is where the magic happens!
-    for @number -> $hundred {
-        my $last = ?($hundred == @number[*-1]); # are we on the last group of three?
-        my $outtmp;
+    if ($input != 0) { # if the input wasn't zero, let's go!
+        # this for loop is where the magic happens!
+        for @number -> $hundred {
+            my $last = ?($hundred == @number[*-1]); # are we on the last group of three?
+            my $outtmp;
 
-        ##STEP 1: Hundreds digit
-        if $hundred.comb[0] !~~ 0 {
-            $outtmp ~= @single[$hundred.comb[0]][0] ~ @single[$hundred.comb[0]][1] ~ " hundred";
-            $outtmp ~= ($hundred.substr(1,2) ~~ 0 && $last ?? "th " !! " ");
-        }
+            ##STEP 1: Hundreds digit
+            if $hundred.comb[0] !~~ 0 {
+                $outtmp ~= @single[$hundred.comb[0]][0] ~ @single[$hundred.comb[0]][1] ~ " hundred";
+                $outtmp ~= ($hundred.substr(1,2) ~~ 0 && $last ?? "th " !! " ");
+            }
 
-        ##STEP 2: Tens digit
-        if $hundred.comb[1] ~~ 1 {
-            $outtmp ~= @teens[$hundred.comb[2]][0];
-            $outtmp ~= $last ?? @teens[$hundred.comb[2]][2] !! @teens[$hundred.comb[2]][1]; # unlike the hundreds digit above, it's useless to check for the rest of the number being 0 when it's in the teens (10..19).
-        }
-        else {
-            $outtmp ~= @tenplace[$hundred.comb[1]][0];
-            ##STEP 3: Ones digit
-            if $hundred.comb[2] ~~ 0 {
-                $outtmp ~= $last ?? @tenplace[$hundred.comb[1]][2] !! @tenplace[$hundred.comb[1]][1];
+            ##STEP 2: Tens digit
+            if $hundred.comb[1] ~~ 1 {
+                $outtmp ~= @teens[$hundred.comb[2]][0];
+                $outtmp ~= $last ?? @teens[$hundred.comb[2]][2] !! @teens[$hundred.comb[2]][1]; # unlike the hundreds digit above, it's useless to check for the rest of the number being 0 when it's in the teens (10..19).
             }
             else {
-                $outtmp ~= @tenplace[$hundred.comb[1]][1] ~ "-";
-                $outtmp ~= @single[$hundred.comb[2]][0];
-                $outtmp ~= $last ?? @single[$hundred.comb[2]][2] !! @single[$hundred.comb[2]][1];
+                $outtmp ~= @tenplace[$hundred.comb[1]][0];
+                ##STEP 3: Ones digit
+                if $hundred.comb[2] ~~ 0 {
+                    $outtmp ~= $last ?? @tenplace[$hundred.comb[1]][2] !! @tenplace[$hundred.comb[1]][1];
+                }
+                else {
+                    $outtmp ~= @tenplace[$hundred.comb[1]][1] ~ "-" if @tenplace[$hundred.comb[1]][1];
+                    $outtmp ~= @single[$hundred.comb[2]][0];
+                    $outtmp ~= $last ?? @single[$hundred.comb[2]][2] !! @single[$hundred.comb[2]][1];
+                }
             }
+            ##STEP 4: Spit out the newly generated group-of-three ordinal, then on to the next!
+            @outnum.push($outtmp);
         }
-        ##STEP 4: Spit out the newly generated group-of-three ordinal, then on to the next!
-        @outnum.push($outtmp);
+
+        ##STEP 5: Add groups of three delimiters
+        # XXX doesn't quite seem to work :/
+        for ^@outnum.elems {
+            @outnum[*-($_+1)] ~ @highdenoms[$_][0];
+            @outnum[*-$_..*-1].join("").Int == 0 ?? @highdenoms[$_][2] !! @highdenoms[$_][1];
+        }
+        ##STEP 6: Send the number to the user!
+        return @outnum.join('');
     }
-    ##STEP 5: Add groups of three delimiters
-    # XXX doesn't quite seem to work :/
-    for ^@outnum.elems {
-        @outnum[*-($_+1)] ~ @highdenoms[$_][0];
-        @outnum[*-$_..*-1] ~~ 0 ?? @highdenoms[$_][2] !! @highdenoms[$_][1];
+    else { # if it does equal zero, then...
+        return "zeroth";
     }
-    ##STEP 6: Send the number to the user!
-    return @outnum.join('');
 }
 
 # TODO: add ordinal_digit [should be millions of times easier :P]

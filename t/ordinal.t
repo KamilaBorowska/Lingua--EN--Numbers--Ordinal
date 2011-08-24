@@ -39,5 +39,46 @@ is ordinal(70), "seventieth", "70 is seventieth";
 is ordinal(80), "eightieth", "80 is eightieth";
 is ordinal(90), "ninetieth", "90 is ninetieth";
 
-#TODO: check on numbers like 21, 54, and >= 100
+# hundreds
+is ordinal(100), "one hundredth", "100 is one hundredth";
+is ordinal(200), "two hundredth", "200 is two hundredth";
+is ordinal(350), "three hundred fiftieth", "300 is three hundred fiftieth";
+is ordinal(402), "four hundred second", "402 is four hundred second";
+is ordinal(544), "five hundred forty-fourth", "544 is five hundred forty-fourth";
+is ordinal(612), "six hundred twelfth", "612 is six hundred twelfth";
+
+# thousands
+is ordinal(1000), "one thousandth", "1000 is one thousandth";
+is ordinal(2000), "two thousandth", "2000 is two thousandth";
+is ordinal(3006), "three thousand sixth", "3006 is three thousand sixth";
+is ordinal(4032), "four thousand thirty-second", "4032 is four thousand thirty-second";
+is ordinal(5931), "five thousand nine hundred thirty-first", "5931 is five thousand nine hundred thirty-first";
+is ordinal(6400), "six thousand four hundredth", "6400 is six thousand four hundredth";
+is ordinal(7070), "seven thousand seventieth", "7070 is seven thousand seventieth";
+is ordinal(8316), "eight thousand three hundred sixteenth", "8316 is eight thousand three hundred sixteenth";
+
+# ten thousands
+is ordinal(10000), "ten thousandth", "10000 is ten thousandth";
+is ordinal(16000), "sixteen thousandth", "16000 is sixteen thousandth";
+is ordinal(20639), "twenty thousand six hundred thirty-ninth", "20639 is twenty thousand six hundred thirty-ninth";
+
+# hundred thousands
+is ordinal(100000), "one hundred thousandth", "100000 is one hundred thousandth";
+is ordinal(160000), "one hundred sixty thousandth", "160000 is one hundred sixty thousandth";
+is ordinal(200042), "two hundred forty-second", "200042 is two hundred forty-second";
+is ordinal(329923), "three hundred twenty nine thousand nine hundred twenty-third", "329923 is three hundred twenty nine thousand nine hundred twenty-third";
+
+# millions
+is ordinal(1000000), "one millionth", "1000000 is one millionth";
+is ordinal(2000000), "two millionth", "2000000 is two millionth";
+is ordinal(3542000), "three million five hundred forty two thousandth", "3542000 is three million five hundred forty two thousandth";
+
+# billions (of the US variety, that is)
+is ordinal(1000000000), "one billionth", "1000000000 is one billionth";
+is ordinal(2000030000), "two billion thirty thousandth", "2000030000 is two billion thirty thousandth";
+
+# what about a number that's two big?
+my $googol = ('1' ~ ('0' xx 100).join).Int; # a googol!
+dies_ok ordinal($googol), "fails with 1 googol";
+
 done;
