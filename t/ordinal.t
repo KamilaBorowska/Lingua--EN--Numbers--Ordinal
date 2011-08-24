@@ -79,6 +79,6 @@ is ordinal(2000030000), "two billion thirty thousandth", "2000030000 is two bill
 
 # what about a number that's two big?
 my $googol = ('1' ~ ('0' xx 100).join).Int; # a googol!
-dies_ok ordinal($googol), "fails with 1 googol";
+dies_ok {ordinal($googol);}, "fails with 1 googol";
 
 done;
