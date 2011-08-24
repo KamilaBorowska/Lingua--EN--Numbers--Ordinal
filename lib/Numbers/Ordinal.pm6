@@ -22,10 +22,13 @@ sub ordinal(Int $input) is export {
     my @highdenoms = ['','',''],['thousand','','th'],['million','','th'],['billion','','th'],['trillion','','th'];
 
     # setting up for the main operation
+    $n .= Str;
     $n = '0' ~ $n until $n.chars %% 3;
     my @number = $n.comb(/<digit>**3/);
     my @outnum;
     my $output;
+
+    die "Number too large for ordinal!" if @number.elems > @highdenoms.elems;
 
     if ($input != 0) { # if the input wasn't zero, let's go!
         # this for loop is where the magic happens!
@@ -60,14 +63,23 @@ sub ordinal(Int $input) is export {
             @outnum.push($outtmp);
         }
 
+        @outnum = @outnum».trim;
+
         ##STEP 5: Add groups of three delimiters
-        for 1..^@outnum.elems { # because working on the last element of @outnum is redundant
-            @outnum[*-($_+1)] .= trim; # perhaps in the future a *real* fix for trailing spaces can be made
-            @outnum[*-($_+1)] ~= " " ~ @highdenoms[$_][0];
-            @outnum[*-($_+1)] ~= (@outnum[*-$_..*-1].join("") == "" ?? @highdenoms[$_][2] !! @highdenoms[$_][1]);
+        for 1..@outnum.elems {
+            if @outnum[*-$_] !~~ "" { # if the element is empty, don't bother. Otherwise, do this:
+                @outnum[*-$_] ~= " " ~ @highdenoms[$_-1][0];
+                @outnum[*-$_] ~= (@outnum[*-($_-1)..*-1].join("") ~~ "" ?? @highdenoms[$_-1][2] !! @highdenoms[$_-1][1]);
+            }
         }
         ##STEP 6: Send the number to the user!
-        return @outnum.join('').trim; # trim for things like 'two hundredth '
+        # removing null elements. Should be using grep, but doesn't work.
+        my @temp;
+        for 0..^@outnum.elems {
+            @temp.push(@outnum[$_]) if ?@outnum[$_];
+        }
+        @outnum = @temp;
+        return @outnum.join(' ').trim; # sometimes trailing spaces get in. Hopefully a *real* fix will occur someday.
     }
     else { # if it does equal zero, then...
         return "zeroth"; # yes, this entry exists in the @single array, but it doesn't work. This does, though.

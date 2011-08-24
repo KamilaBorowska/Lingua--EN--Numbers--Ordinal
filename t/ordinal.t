@@ -65,17 +65,18 @@ is ordinal(20639), "twenty thousand six hundred thirty-ninth", "20639 is twenty 
 # hundred thousands
 is ordinal(100000), "one hundred thousandth", "100000 is one hundred thousandth";
 is ordinal(160000), "one hundred sixty thousandth", "160000 is one hundred sixty thousandth";
-is ordinal(200042), "two hundred forty-second", "200042 is two hundred forty-second";
-is ordinal(329923), "three hundred twenty nine thousand nine hundred twenty-third", "329923 is three hundred twenty nine thousand nine hundred twenty-third";
+is ordinal(200042), "two hundred thousand forty-second", "200042 is two hundred thousand forty-second";
+is ordinal(329923), "three hundred twenty-nine thousand nine hundred twenty-third", "329923 is three hundred twenty-nine thousand nine hundred twenty-third";
 
 # millions
 is ordinal(1000000), "one millionth", "1000000 is one millionth";
 is ordinal(2000000), "two millionth", "2000000 is two millionth";
-is ordinal(3542000), "three million five hundred forty two thousandth", "3542000 is three million five hundred forty two thousandth";
+is ordinal(3542000), "three million five hundred forty-two thousandth", "3542000 is three million five hundred forty-two thousandth";
 
 # billions (of the US variety, that is)
 is ordinal(1000000000), "one billionth", "1000000000 is one billionth";
 is ordinal(2000030000), "two billion thirty thousandth", "2000030000 is two billion thirty thousandth";
+is ordinal(3040005000), "three billion forty million five thousandth", "3040005000 is three billion forty million five thousandth";
 
 # what about a number that's two big?
 my $googol = ('1' ~ ('0' xx 100).join).Int; # a googol!
