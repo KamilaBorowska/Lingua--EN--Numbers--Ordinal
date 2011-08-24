@@ -1,11 +1,13 @@
 use v6;
 
-#module Numbers::Ordinal;
+module Numbers::Ordinal;
 
-sub ordinal(Int $n is copy) {
+sub ordinal(Int $input) is export {
     ##STEP 0: Preparation
     # NYI, but still a good guide to the below arrays
     #my enum NumType <base cardinal ordinal>;
+
+    my $n = $input;
 
     # for the single digits
     my @single = ['zero','','th'],['','one','first'],['','two','second'],['th','ree','ird'],['four','','th'],['fi','ve','fth'],['six','', 'th'],['seven','','th'],['eight','','h'],['nin','e','th'];
