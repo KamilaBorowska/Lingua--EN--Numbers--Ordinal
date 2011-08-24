@@ -1,6 +1,6 @@
 use v6;
 
-module Numbers::Ordinal;
+module Lingua::EN::Numbers::Ordinal;
 
 sub ordinal(Int $input) is export {
     ##STEP 0: Preparation

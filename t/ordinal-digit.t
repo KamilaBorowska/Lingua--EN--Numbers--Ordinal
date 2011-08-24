@@ -1,7 +1,7 @@
 # t/ordinal-digit.t -- test &ordinal_digit
 use v6;
 use Test;
-use Numbers::Ordinal;
+use Lingua::EN::Numbers::Ordinal;
 
 plan *;
 

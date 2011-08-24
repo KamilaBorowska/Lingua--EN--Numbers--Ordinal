@@ -1,5 +1,5 @@
 {
-    "name" : "Numbers::Ordinal",
+    "name" : "Lingua::EN::Numbers::Ordinal",
     "version" : "*",
     "description" : "A module that generates ordinal numbers from cardinal numbers",
     "depends" : [],
