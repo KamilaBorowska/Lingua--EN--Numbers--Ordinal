@@ -61,16 +61,15 @@ sub ordinal(Int $input) is export {
         }
 
         ##STEP 5: Add groups of three delimiters
-        # XXX doesn't quite seem to work :/
-        for ^@outnum.elems {
-            @outnum[*-($_+1)] ~ @highdenoms[$_][0];
-            @outnum[*-$_..*-1].join("").Int == 0 ?? @highdenoms[$_][2] !! @highdenoms[$_][1];
+        for 1..^@outnum.elems { # because working on the last element of @outnum is redundant
+            @outnum[*-($_+1)] ~= " " ~ @highdenoms[$_][0];
+            @outnum[*-($_+1)] ~= (@outnum[*-$_..*-1].join("") == "" ?? @highdenoms[$_][2] !! @highdenoms[$_][1]);
         }
         ##STEP 6: Send the number to the user!
-        return @outnum.join('');
+        return @outnum.join('').trim; # trim for things like 'two hundredth '
     }
     else { # if it does equal zero, then...
-        return "zeroth";
+        return "zeroth"; # yes, this entry exists in the @single array, but it doesn't work. This does, though.
     }
 }
 
