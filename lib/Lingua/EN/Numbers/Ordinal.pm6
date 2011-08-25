@@ -86,4 +86,32 @@ sub ordinal(Int $input) is export {
     }
 }
 
-# TODO: add ordinal_digit [should be millions of times easier :P]
+sub ordinal_digit(Int $input) is export {
+
+    # get the last two digits
+    # The .fmt is to pad single digits to keep [*-2..*-1] from dying
+    my @last_two_nums = $input.Str.fmt('%02d').comb[*-2..*-1]».Int;
+    my $result = $input.Str;
+
+    if @last_two_nums[0] == 1 { # is the last two digits in 10..19?
+        $result ~= "th";
+    }
+    else {
+        given @last_two_nums[1] {
+            when 1 {
+                $result ~= "st";
+            }
+            when 2 {
+                $result ~= "nd";
+            }
+            when 3 {
+                $result ~= "rd";
+            }
+            default {
+                $result ~= "th";
+            }
+        }
+    }
+
+    return $result; # there, that wasn't nearly as hard as &ordinal, was it?
+}
