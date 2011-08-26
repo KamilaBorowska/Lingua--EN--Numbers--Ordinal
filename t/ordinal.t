@@ -78,6 +78,13 @@ is ordinal(1000000000), "one billionth", "1000000000 is one billionth";
 is ordinal(2000030000), "two billion thirty thousandth", "2000030000 is two billion thirty thousandth";
 is ordinal(3040005000), "three billion forty million five thousandth", "3040005000 is three billion forty million five thousandth";
 
+# trillions
+is ordinal(1000000000000), "one trillionth", "1000000000000 is one trillionth";
+is ordinal(1000002300000), "one trillion two million three hundred thousandth", "1000002300000 is one trillion two million three hundred thousandth";
+
+# largest supported number [currently 999,999,999,999,999]
+is ordinal(999999999999999), "nine hundred ninety-nine trillion nine hundred ninety-nine billion nine hundred ninety-nine million nine hundred ninety-nine thousand nine hundred ninety-ninth", "999999999999999 is nine hundred ninety-nine trillion nine hundred ninety-nine billion nine hundred ninety-nine million nine hundred ninety-nine thousand nine hundred ninety-ninth";
+
 # what about a number that's two big?
 my $googol = ('1' ~ ('0' xx 100).join).Int; # a googol!
 dies_ok {ordinal($googol);}, "fails with 1 googol";

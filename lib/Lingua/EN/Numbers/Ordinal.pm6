@@ -28,7 +28,7 @@ sub ordinal(Int $input) is export {
     my @outnum;
     my $output;
 
-    die "Number too large for ordinal!" if @number.elems > @highdenoms.elems;
+    die 'Number too large for &ordinal. Try &ordinal_digit, it has no upper limit.' if @number.elems > @highdenoms.elems;
 
     if ($input != 0) { # if the input wasn't zero, let's go!
         # this for loop is where the magic happens!
