@@ -3,6 +3,5 @@
     "version" : "*",
     "description" : "A module that generates ordinal numbers from cardinal numbers",
     "depends" : [],
-    "repo-type" : "git",
-    "repo-url" : "git://github.com/lue/Lingua--EN--Numbers--Ordinal.git"
+    "source-url" : "git://github.com/lue/Lingua--EN--Numbers--Ordinal.git"
 }
